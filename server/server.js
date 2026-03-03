@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser");
 
 let db;
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
+  res.header("Access-Control-Allow-Origin", "https://geofy-client.onrender.com"); 
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 connectToDb((err)=>{
     if(!err){
-        app.listen('8080',() => console.log("app listening to port 8080"))  
+        app.listen('8080',() => console.log("app listening to port"))  
         db = getDB();
     }
     else{
@@ -213,7 +213,7 @@ app.post("/admin/login",async (req, res)=>{
             ///////// sending JWT to client \\\\\\\\\\\
             res.cookie("token", token,{
                 httpOnly:true,
-                secure:false,
+                secure:true,
                 sameSite:"strict",
                 maxAge:60 * 60 * 1000
             });   
@@ -229,7 +229,7 @@ app.post("/admin/logout",authenticateJWT, (req, res)=>{
  
     res.clearCookie("token",{
         httpOnly:true,
-        secure:false,
+        secure:true,
         sameSite:"strict"
     })
     res.status(200).json({message:"LoggedOut"})
