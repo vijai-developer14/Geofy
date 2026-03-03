@@ -214,7 +214,7 @@ app.post("/admin/login",async (req, res)=>{
             res.cookie("token", token,{
                 httpOnly:true,
                 secure:true,
-                sameSite:"strict",
+                sameSite:"none",
                 maxAge:60 * 60 * 1000
             });   
             return res.status(200).json({message:"UserLoginSuccess"}); 
@@ -230,7 +230,7 @@ app.post("/admin/logout",authenticateJWT, (req, res)=>{
     res.clearCookie("token",{
         httpOnly:true,
         secure:true,
-        sameSite:"strict"
+        sameSite:"none"
     })
     res.status(200).json({message:"LoggedOut"})
 });
